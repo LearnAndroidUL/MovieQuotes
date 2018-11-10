@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -27,7 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        db.collection("moviequotes")
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setHasFixedSize(true);
+        MovieQuoteAdapter movieQuoteAdapter = new MovieQuoteAdapter(this);
+        recyclerView.setAdapter(movieQuoteAdapter);
+
+        db.collection(getString(R.string.firebase_collection))
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

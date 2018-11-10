@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Movie Quotes</string>
+    <string name="firebase_collection">moviequotes</string>
     <string name="action_settings">Settings</string>
+    <string name="default_quote">Quote goes here</string>
+    <string name="default_movie">Movie goes here</string>
 </resources>
