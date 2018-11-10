@@ -3,16 +3,12 @@ package io.ruszkipista.moviequotes;
 import android.content.Context;
 
 public class MovieQuote {
-    private String quote;
     private String movie;
+    private String quote;
 
-    public MovieQuote(String quote, String movie) {
-        this.quote = quote;
+    public MovieQuote(String movie, String quote) {
         this.movie = movie;
-    }
-
-    public MovieQuote(Context mContext) {
-
+        this.quote = quote;
     }
 
     public String getQuote() {

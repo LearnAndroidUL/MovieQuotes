@@ -15,10 +15,8 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
         private Context mContext;
         private RecyclerView mRecyclerView;
 
-        public MovieQuoteAdapter(Context context) {mContext = context;}
-
-        public MovieQuote addMovieQuote(){
-            MovieQuote movieQuote = new MovieQuote(mContext);
+        public MovieQuote addMovieQuote(String movie, String quote){
+            MovieQuote movieQuote = new MovieQuote(movie, quote);
             mMovieQuotes.add(0, movieQuote);
 //      notifyDataSetChanged();  // works OK, but we want animation
             notifyItemInserted(0);

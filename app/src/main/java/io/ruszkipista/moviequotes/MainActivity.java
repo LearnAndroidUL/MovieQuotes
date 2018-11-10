@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
-        MovieQuoteAdapter movieQuoteAdapter = new MovieQuoteAdapter(this);
+        final MovieQuoteAdapter movieQuoteAdapter = new MovieQuoteAdapter();
         recyclerView.setAdapter(movieQuoteAdapter);
 
         db.collection(getString(R.string.firebase_collection))
@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                movieQuoteAdapter.addMovieQuote(document.getData().get("movie").toString(),
+                                        document.getData().get("quote").toString());
                                 Log.d("Firestore", document.getId() + " => " + document.getData());
                             }
                         } else {
