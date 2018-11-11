@@ -1,5 +1,7 @@
 package io.ruszkipista.moviequotes;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -85,11 +87,12 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
                 super(itemView);
                 mQuoteTextView = itemView.findViewById(R.id.itemview_quote);
                 mMovieTextView = itemView.findViewById(R.id.itemview_movie);
-                itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onLongClick(View v) {
-                        removeMovieQuote(getAdapterPosition());
-                        return true;
+                    public void onClick(View view) {
+                        Context context = view.getContext();
+                        Intent intent = new Intent(context,MovieQuoteDetailActivity.class);
+                        context.startActivity(intent);
                     }
                 });
             }

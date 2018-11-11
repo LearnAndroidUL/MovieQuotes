@@ -1,28 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="6dp"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".MovieQuoteDetailActivity"
+    tools:showIn="@layout/activity_movie_quote_detail"
+    android:padding="20dp">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/detail_quote" />
-    <EditText
-        android:id="@+id/dialog_quote_field"
+
+    <TextView
+        android:id="@+id/detail_quote_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dialog_quote_hint"
-        android:inputType="textCapSentences" />
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/dialog_quote_hint"
+        android:textSize="20sp" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/detail_movie"/>
-    <EditText
-        android:id="@+id/dialog_movie_field"
+        android:text="@string/detail_movie" />
+
+    <TextView
+        android:id="@+id/detail_movie_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dialog_movie_hint"
-        android:inputType="textCapSentences" />
+        android:layout_margin="20dp"
+        android:gravity="center"
+        android:text="@string/dialog_movie_hint"
+        android:textSize="16sp" />
 
 </LinearLayout>
