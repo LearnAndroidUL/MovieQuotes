@@ -6,18 +6,26 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+import javax.annotation.Nullable;
 
 public class DetailActivity extends AppCompatActivity {
     private TextView mQuoteTextView;
     private TextView mMovieTextView;
-    CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
+    private DocumentReference mDocRef;
+    private DocumentSnapshot mDocSnapshot;
 
 
     @Override
@@ -31,9 +39,23 @@ public class DetailActivity extends AppCompatActivity {
         mMovieTextView = findViewById(R.id.detail_movie_field);
 
         String docId = getIntent().getStringExtra(Constants.EXTRA_DOC_ID);
-//        moviequoteRef.getId(docId)
-        mQuoteTextView.setText(docId);
-        mMovieTextView.setText("M");
+        mDocRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq).document(docId);
+        mDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(Constants.log_tag, "Firebase detail listening failed!");
+                    return;
+                } else {
+                    if (documentSnapshot.exists()){
+                        mQuoteTextView.setText((String)documentSnapshot.get(Constants.KEY_QUOTE));
+                        mMovieTextView.setText((String)documentSnapshot.get(Constants.KEY_MOVIE));
+                    }
+                }
+
+
+            }
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
