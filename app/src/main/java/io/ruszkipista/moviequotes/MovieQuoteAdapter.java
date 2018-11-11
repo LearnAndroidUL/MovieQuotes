@@ -43,18 +43,6 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
             });
         }
 
-        public DocumentSnapshot addMovieQuote(String movie, String quote){
-//            CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
-            Map<String, Object> movieQuote = new HashMap< >();
-            movieQuote.put(Constants.firebase_column_quote,quote);
-            movieQuote.put(Constants.firebase_column_movie,movie);
-            mMovieQuoteSnapshots.add(0, (DocumentSnapshot)movieQuote);
-//      notifyDataSetChanged();  // works OK, but we want animation
-            notifyItemInserted(0);
-            notifyItemRangeChanged(0, mMovieQuoteSnapshots.size());
-            mRecyclerView.scrollToPosition(0);
-            return (DocumentSnapshot)movieQuote;
-        }
 
         public void removeMovieQuote(int position){
             mMovieQuoteSnapshots.remove(position);
