@@ -7,4 +7,7 @@
     <string name="dialog_title_edit">Edit movie quote</string>
     <string name="dialog_quote_hint">Enter a movie quote</string>
     <string name="dialog_movie_hint">Enter a movie title</string>
+    <string name="detail_name">Movie Quote - Detail</string>
+    <string name="detail_quote">Quote</string>
+    <string name="detail_movie">Movie</string>
 </resources>

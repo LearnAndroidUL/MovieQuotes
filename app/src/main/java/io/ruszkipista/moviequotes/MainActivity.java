@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void showInputDialog(final boolean isEdit) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            View view = getLayoutInflater().inflate(R.layout.moviequote_dialog,null,false);
+            View view = getLayoutInflater().inflate(R.layout.dialog_moviequote,null,false);
             if (isEdit){ builder.setTitle(R.string.dialog_title_add);}
             else { builder.setTitle(R.string.dialog_title_edit);}
             builder.setView(view);

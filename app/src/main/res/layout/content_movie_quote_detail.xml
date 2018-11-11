@@ -6,14 +6,18 @@
     android:orientation="vertical">
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:text="@string/detail_quote" />
     <EditText
         android:id="@+id/dialog_quote_field"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/dialog_quote_hint"
         android:inputType="textCapSentences" />
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/detail_movie"/>
     <EditText
         android:id="@+id/dialog_movie_field"
         android:layout_width="match_parent"

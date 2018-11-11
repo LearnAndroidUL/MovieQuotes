@@ -59,7 +59,7 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
         @NonNull
         @Override
         public MovieQuoteViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.moviequote_itemview,viewGroup, false);
+            View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.itemview_moviequotes,viewGroup, false);
             return new MovieQuoteViewHolder(itemView);
         }
 
