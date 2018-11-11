@@ -1,10 +1,8 @@
 package io.ruszkipista.moviequotes;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -48,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     private void showInputDialog(final boolean isEdit) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View view = getLayoutInflater().inflate(R.layout.moviequote_dialog,null,false);
+            if (isEdit){ builder.setTitle(R.string.dialog_title_add);}
+            else { builder.setTitle(R.string.dialog_title_edit);}
             builder.setView(view);
             final EditText quoteEditTextView = view.findViewById(R.id.dialog_quote_field);
             final EditText movieEditTextView = view.findViewById(R.id.dialog_movie_field);
@@ -70,8 +70,9 @@ public class MainActivity extends AppCompatActivity {
                     } else {
 //                  create new item with captured details
                         Map<String, Object> movieQuote = new HashMap< >();
-                        movieQuote.put(Constants.firebase_column_quote,quote);
-                        movieQuote.put(Constants.firebase_column_movie,movie);
+                        movieQuote.put(Constants.KEY_QUOTE,quote);
+                        movieQuote.put(Constants.KEY_MOVIE,movie);
+                        movieQuote.put(Constants.KEY_CREATED, new Date());
                         FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq).add(movieQuote);
                     }
                 }

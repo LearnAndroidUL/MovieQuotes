@@ -8,18 +8,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
-import android.content.Context;
 
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -29,7 +27,9 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
 
         public MovieQuoteAdapter(){
             CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
-            moviequoteRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            moviequoteRef
+                    .orderBy(Constants.KEY_CREATED, Query.Direction.DESCENDING).limit(50)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                     if (e != null) {
@@ -66,9 +66,9 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
         @Override
         public void onBindViewHolder(@NonNull MovieQuoteViewHolder movieQuoteViewHolder, int i) {
             DocumentSnapshot movieQuote = mMovieQuoteSnapshots.get(i);
-            String quote = (String) movieQuote.get(Constants.firebase_column_quote);
+            String quote = (String) movieQuote.get(Constants.KEY_QUOTE);
             movieQuoteViewHolder.mQuoteTextView.setText(quote);
-            String movie = (String) movieQuote.get(Constants.firebase_column_movie);
+            String movie = (String) movieQuote.get(Constants.KEY_MOVIE);
             movieQuoteViewHolder.mMovieTextView.setText(movie);
         }
 

@@ -3,7 +3,8 @@
     <string name="action_settings">Settings</string>
     <string name="default_quote">Quote goes here</string>
     <string name="default_movie">Movie goes here</string>
-    <string name="dialog_title">Add a movie quote</string>
+    <string name="dialog_title_add">Add a movie quote</string>
+    <string name="dialog_title_edit">Edit movie quote</string>
     <string name="dialog_quote_hint">Enter a movie quote</string>
     <string name="dialog_movie_hint">Enter a movie title</string>
 </resources>
