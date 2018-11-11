@@ -81,7 +81,8 @@ public class DetailActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_delete:
-
+                mDocRef.delete();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
