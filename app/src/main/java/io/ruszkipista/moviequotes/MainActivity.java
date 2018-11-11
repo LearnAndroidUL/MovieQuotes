@@ -38,23 +38,18 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showInputDialog(false);
+                showInputDialog();
             }
         });
     }
 
-    private void showInputDialog(final boolean isEdit) {
+    private void showInputDialog() {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             View view = getLayoutInflater().inflate(R.layout.dialog_moviequote,null,false);
-            if (isEdit){ builder.setTitle(R.string.dialog_title_add);}
-            else { builder.setTitle(R.string.dialog_title_edit);}
+            builder.setTitle(R.string.dialog_title_add);
             builder.setView(view);
             final EditText quoteEditTextView = view.findViewById(R.id.dialog_quote_field);
             final EditText movieEditTextView = view.findViewById(R.id.dialog_movie_field);
-            if (isEdit) {
-//                quoteEditTextView.setText(mCurrentItem.getName());
-//                movieEditTextView.setText(mCurrentItem.getName());
-            }
 
             builder.setNegativeButton(android.R.string.cancel,null);
             builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -62,12 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     String quote = quoteEditTextView.getText().toString();
                     String movie = movieEditTextView.getText().toString();
-                    if (isEdit){
-//                  update current item with changed details
-//                        mCurrentItem.setName(itemName);
-//                        mCurrentItem.setQuantity(itemQuantity);
-//                        mCurrentItem.setDeliveryDate(deliveryDate);
-                    } else {
+
 //                  create new item with captured details
                         Map<String, Object> movieQuote = new HashMap< >();
                         movieQuote.put(Constants.KEY_QUOTE,quote);
@@ -75,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                         movieQuote.put(Constants.KEY_CREATED, new Date());
                         FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq).add(movieQuote);
                     }
-                }
             });
             builder.create().show();
     }
