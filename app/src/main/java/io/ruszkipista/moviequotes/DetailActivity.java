@@ -1,5 +1,6 @@
 package io.ruszkipista.moviequotes;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,15 +9,31 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-public class MovieQuoteDetailActivity extends AppCompatActivity {
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+public class DetailActivity extends AppCompatActivity {
+    private TextView mQuoteTextView;
+    private TextView mMovieTextView;
+    CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_movie_quote_detail);
+        setContentView(R.layout.activity_detail);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        mQuoteTextView = findViewById(R.id.detail_quote_field);
+        mMovieTextView = findViewById(R.id.detail_movie_field);
+
+        String docId = getIntent().getStringExtra(Constants.EXTRA_DOC_ID);
+//        moviequoteRef.getId(docId)
+        mQuoteTextView.setText(docId);
+        mMovieTextView.setText("M");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MovieQuoteDetailActivity"
+            android:name=".DetailActivity"
             android:label="@string/detail_name"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

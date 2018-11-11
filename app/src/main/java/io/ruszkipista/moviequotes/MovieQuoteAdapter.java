@@ -91,7 +91,9 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
                     @Override
                     public void onClick(View view) {
                         Context context = view.getContext();
-                        Intent intent = new Intent(context,MovieQuoteDetailActivity.class);
+                        Intent intent = new Intent(context,DetailActivity.class);
+                        DocumentSnapshot ds = mMovieQuoteSnapshots.get(getAdapterPosition());
+                        intent.putExtra(Constants.EXTRA_DOC_ID, ds.getId());
                         context.startActivity(intent);
                     }
                 });
