@@ -27,30 +27,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         final MovieQuoteAdapter movieQuoteAdapter = new MovieQuoteAdapter();
         recyclerView.setAdapter(movieQuoteAdapter);
-
-        db.collection(getString(R.string.firebase_collection))
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                movieQuoteAdapter.addMovieQuote(document.getData().get("movie").toString(),
-                                        document.getData().get("quote").toString());
-                                Log.d("Firestore", document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.w("Firestore", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

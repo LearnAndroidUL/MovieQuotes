@@ -2,33 +2,64 @@ package io.ruszkipista.moviequotes;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 import android.content.Context;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.MovieQuoteViewHolder>{
-        private List<MovieQuote> mMovieQuotes = new ArrayList<>();
-        private Context mContext;
+        private List<DocumentSnapshot> mMovieQuoteSnapshots = new ArrayList<>();
         private RecyclerView mRecyclerView;
 
-        public MovieQuote addMovieQuote(String movie, String quote){
-            MovieQuote movieQuote = new MovieQuote(movie, quote);
-            mMovieQuotes.add(0, movieQuote);
+        public MovieQuoteAdapter(){
+            CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
+            moviequoteRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if (e != null) {
+                        Log.w(Constants.log_tag, "Firebase listening failed!");
+                        return;
+                    } else {
+                        mMovieQuoteSnapshots = queryDocumentSnapshots.getDocuments();
+                        notifyDataSetChanged();
+                    }
+                }
+            });
+        }
+
+        public DocumentSnapshot addMovieQuote(String movie, String quote){
+//            CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
+            Map<String, Object> movieQuote = new HashMap< >();
+            movieQuote.put(Constants.firebase_column_quote,quote);
+            movieQuote.put(Constants.firebase_column_movie,movie);
+            mMovieQuoteSnapshots.add(0, (DocumentSnapshot)movieQuote);
 //      notifyDataSetChanged();  // works OK, but we want animation
             notifyItemInserted(0);
-            notifyItemRangeChanged(0, mMovieQuotes.size());
+            notifyItemRangeChanged(0, mMovieQuoteSnapshots.size());
             mRecyclerView.scrollToPosition(0);
-            return movieQuote;
+            return (DocumentSnapshot)movieQuote;
         }
 
         public void removeMovieQuote(int position){
-            mMovieQuotes.remove(position);
+            mMovieQuoteSnapshots.remove(position);
             notifyItemRemoved(position);
-            notifyItemRangeChanged(0, mMovieQuotes.size());
+            notifyItemRangeChanged(0, mMovieQuoteSnapshots.size());
         }
 
         @Override
@@ -46,14 +77,16 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
 
         @Override
         public void onBindViewHolder(@NonNull MovieQuoteViewHolder movieQuoteViewHolder, int i) {
-            MovieQuote movieQuote = mMovieQuotes.get(i);
-            movieQuoteViewHolder.mQuoteTextView.setText(movieQuote.getQuote());
-            movieQuoteViewHolder.mMovieTextView.setText(movieQuote.getMovie());
+            DocumentSnapshot movieQuote = mMovieQuoteSnapshots.get(i);
+            String quote = (String) movieQuote.get(Constants.firebase_column_quote);
+            movieQuoteViewHolder.mQuoteTextView.setText(quote);
+            String movie = (String) movieQuote.get(Constants.firebase_column_movie);
+            movieQuoteViewHolder.mMovieTextView.setText(movie);
         }
 
         @Override
         public int getItemCount() {
-            return mMovieQuotes.size();
+            return mMovieQuoteSnapshots.size();
         }
 
         class MovieQuoteViewHolder extends RecyclerView.ViewHolder {
