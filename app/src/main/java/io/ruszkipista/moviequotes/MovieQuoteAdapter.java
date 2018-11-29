@@ -45,13 +45,6 @@ public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.M
             });
         }
 
-
-        public void removeMovieQuote(int position){
-            mMovieQuoteSnapshots.remove(position);
-            notifyItemRemoved(position);
-            notifyItemRangeChanged(0, mMovieQuoteSnapshots.size());
-        }
-
         @Override
         public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
             super.onAttachedToRecyclerView(recyclerView);
