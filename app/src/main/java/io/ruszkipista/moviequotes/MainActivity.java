@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_signout:
                 mAuth.signOut();
+                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

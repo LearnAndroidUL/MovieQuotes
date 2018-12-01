@@ -25,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordEditText;
     private final static int IN = 1;
     private final static int UP = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,6 @@ public class LoginActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-            finish();
         }
     }
 
