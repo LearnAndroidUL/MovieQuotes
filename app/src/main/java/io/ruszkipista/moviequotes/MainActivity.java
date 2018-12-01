@@ -14,7 +14,6 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Date;
@@ -90,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_signout:
                 mAuth.signOut();
-                finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import java.util.ArrayList;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -26,11 +27,14 @@ import javax.annotation.Nullable;
 public class MovieQuoteAdapter  extends RecyclerView.Adapter<MovieQuoteAdapter.MovieQuoteViewHolder>{
         private List<DocumentSnapshot> mMovieQuoteSnapshots = new ArrayList<>();
         private RecyclerView mRecyclerView;
+        private FirebaseAuth mAuth;
 
         public MovieQuoteAdapter(){
+            mAuth = FirebaseAuth.getInstance();
             CollectionReference moviequoteRef = FirebaseFirestore.getInstance().collection(Constants.firebase_collection_mq);
             moviequoteRef
-                    .orderBy(Constants.KEY_CREATED, Query.Direction.DESCENDING).limit(50)
+                    .whereEqualTo(Constants.KEY_USER_ID,mAuth.getCurrentUser().getUid())
+                    .orderBy(Constants.KEY_CREATED, Query.Direction.DESCENDING)
                     .addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
