@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
 //                  create new item with captured details
                         Map<String, Object> movieQuote = new HashMap< >();
+                        movieQuote.put(Constants.KEY_USER_ID,mAuth.getCurrentUser().getUid());
                         movieQuote.put(Constants.KEY_QUOTE,quote);
                         movieQuote.put(Constants.KEY_MOVIE,movie);
                         movieQuote.put(Constants.KEY_CREATED, new Date());

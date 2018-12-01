@@ -23,6 +23,8 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText mEmailEditText;
     private EditText mPasswordEditText;
+    private final static int IN = 1;
+    private final static int UP = 2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,13 +35,15 @@ public class LoginActivity extends AppCompatActivity {
         if (mAuth.getCurrentUser() != null) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 
-    public void handleSignIn(View view){
-        Toast.makeText(this,"Sign In", Toast.LENGTH_SHORT).show();
-    }
-    public void handleSignUp(View view){
+    public void handleSignIn(View view){ handleSign(view,IN); }
+
+    public void handleSignUp(View view){ handleSign(view,UP); }
+
+    public void handleSign(View view, int function){
         String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
         if (email.length() <5 || !email.contains("@")) {
@@ -47,17 +51,35 @@ public class LoginActivity extends AppCompatActivity {
         } else if (password.length() < 5) {
             mEmailEditText.setError(getString(R.string.invalid_password));
         } else {
-            mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()){
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(LoginActivity.this,"Sign Up failed", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            switch (function) {
+                case IN:
+                    mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this,"Sign In failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    break;
+
+                case UP:
+                    mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()){
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this,"Sign Up failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                    break;
+            }
         }
     }
 }
