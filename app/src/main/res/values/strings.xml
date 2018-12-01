@@ -18,4 +18,5 @@
     <string name="action_sign_up">Register New User</string>
     <string name="invalid_email">This email address is invalid</string>
     <string name="invalid_password">Password is too short</string>
+    <string name="action_signout">Sign out</string>
 </resources>
